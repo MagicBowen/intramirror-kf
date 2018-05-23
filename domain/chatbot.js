@@ -1,5 +1,5 @@
-const postJson = require('../utils/syncpost');
-const logger = require('./logger').logger('chatbot');
+const postJson = require('../utils/syncpost').syncPost;
+const logger = require('../logger').logger('chatbot');
 
 const API_URL = 'https://botapi.chaoxin.com';
 const API_TOKEN = '670672:e33ccc36bd3b4342fb5315f07d17f526';
