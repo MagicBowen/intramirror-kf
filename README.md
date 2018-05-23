@@ -1,1 +1,1 @@
-key : 670672:e33ccc36bd3b4342fb5315f07d17f526
+Customer service chatbot for Intramirror on ChaoXin.
