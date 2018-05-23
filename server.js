@@ -32,7 +32,7 @@ app.use(async (ctx, next) => {
 ///////////////////////////////////////////////////////////
 // deal static files:
 app.use(staticFiles('/static/', __dirname + '/static'));
-app.use(staticFiles('/', __dirname + '/'));
+// app.use(staticFiles('/', __dirname + '/'));
 
 // parse request body:
 app.use(bodyParser());
