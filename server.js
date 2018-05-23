@@ -32,6 +32,8 @@ app.use(async (ctx, next) => {
 ///////////////////////////////////////////////////////////
 // deal static files:
 app.use(staticFiles('/static/', __dirname + '/static'));
+app.use(staticFiles('/', __dirname + '/'));
+
 // parse request body:
 app.use(bodyParser());
 // add nunjucks as view:
