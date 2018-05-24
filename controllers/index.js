@@ -13,34 +13,36 @@ var handleMsg = async (ctx, next) => {
         if (msg.message_type === MESSAGE_TEXT_TYPE) {
             const text = msg.text;
             logger.info(`Receive msg : ${text}`);
-            const file = `${__dirname}/../static/image/01.png`;
+            const file = `${__dirname}/../static/image/03.png`;
             const image = fs.createReadStream(file);
+            const keyboards = {
+                resize_keyboard : 1,
+                keyboard : [
+                    [{type : 0, text : 'button'}, {type : 1, text : 'card'}],
+                    [{type : 2, text : 'position'}, {type : 3, content : '/help',text:'help'}],
+                    [{type : 0, text : '你好，有什么可以帮到您吗?'}]
+                ]
+               };
             const reply = {chat_id : msg.chat_id, 
                            chat_type : msg.chat_type, 
-                           text : text, 
+                           text : '/客户, this is a test message!', 
                            image : image,
-                           entities : [
+                           entities : JSON.stringify([
                                 {
-                                    type: 1,
-                                    offset : 0,
-                                    length : 2,
-                                    url : 'http://xiaoda.ai',
-                                    sharable : 0
+                                    "type": 1,
+                                    "offset" : 0,
+                                    "length" : 3,
+                                    "url" : ""
                                 },
                                 {
                                     type: 0,
                                     user_id: msg.user_id,
                                     nickname: msg.nickname
                                 }
-                           ],
-                           reply_keyboard : {
-                            resize_keyboard : 1,
-                            keyboard : [
-                                [{type : 0, text : 'button'}, {type : 1, text : 'card'}],
-                                [{type : 2, text : 'position'}, {type : 3, content : 'help'}]
-                            ]
-                           }
+                           ]),
+                        reply_keyboard : JSON.stringify(keyboards)
                           };
+            // chatbot.send('sendTextMessage', reply);
             chatbot.send('sendImageMessage', reply);
         }
     }
