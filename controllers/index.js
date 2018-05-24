@@ -8,9 +8,9 @@ const REQUEST_TALK_MESSAGE_TYPE = 1;
 
 var handleMsg = async (ctx, next) => {
     const msg = ctx.request.body;
+    logger.debug(msg);
     if (msg.request_type === REQUEST_TALK_MESSAGE_TYPE ) {
         if (msg.message_type === MESSAGE_TEXT_TYPE) {
-            logger.debug(msg);
             const text = msg.text;
             logger.info(`Receive msg : ${text}`);
             const file = `${__dirname}/../static/image/01.png`;
