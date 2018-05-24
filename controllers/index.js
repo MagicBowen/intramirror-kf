@@ -15,7 +15,33 @@ var handleMsg = async (ctx, next) => {
             logger.info(`Receive msg : ${text}`);
             const file = `${__dirname}/../static/image/01.png`;
             const image = fs.createReadStream(file);
-            chatbot.send('sendImageMessage', {chat_id : msg.chat_id, chat_type : msg.chat_type, text : text, image : image});
+            const reply = {chat_id : msg.chat_id, 
+                           chat_type : msg.chat_type, 
+                           text : text, 
+                           image : image,
+                           entities : [
+                                {
+                                    type: 1,
+                                    offset : 0,
+                                    length : 2,
+                                    url : 'http://xiaoda.ai',
+                                    sharable : 0
+                                },
+                                {
+                                    type: 0,
+                                    user_id: msg.user_id,
+                                    nickname: msg.nickname
+                                }
+                           ],
+                           reply_keyboard : {
+                            resize_keyboard : 1,
+                            keyboard : [
+                                [{type : 0, text : 'button'}, {type : 1, text : 'card'}],
+                                [{type : 2, text : 'position'}, {type : 3, content : 'help'}]
+                            ]
+                           }
+                          };
+            chatbot.send('sendImageMessage', reply);
         }
     }
 }
