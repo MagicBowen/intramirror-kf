@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const koaBody = require('koa-body');
 const Router  = require('koa-router');
 const session = require('koa-session');
 const convert = require('koa-convert');
@@ -6,11 +7,12 @@ const bodyParser = require('koa-bodyparser');
 const controller = require('./controller');
 const templating = require('./templating');
 const staticFiles = require('./static-files');
+const Telegraf = require('telegraf')
 const logger = require('./logger').logger('server');
 
 ///////////////////////////////////////////////////////////
 const isProduction = process.env.NODE_ENV === 'production';
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 8080;
 const host = process.env.PORT || '127.0.0.1';
 
 ///////////////////////////////////////////////////////////
@@ -32,7 +34,6 @@ app.use(async (ctx, next) => {
 ///////////////////////////////////////////////////////////
 // deal static files:
 app.use(staticFiles('/static/', __dirname + '/static'));
-// app.use(staticFiles('/', __dirname + '/'));
 
 // parse request body:
 app.use(bodyParser());
@@ -43,6 +44,23 @@ app.use(templating('views', {
 }));
 // add controllers:
 app.use(controller());
+
+const bot = new Telegraf('576795663:AAEVjDl7tOaoJWYCysgND-9bwNSc6jjEKm4')
+// First reply will be served via webhook response,
+// but messages order not guaranteed due to `koa` pipeline design.
+// Details: https://github.com/telegraf/telegraf/issues/294
+bot.command('image', (ctx) => ctx.replyWithPhoto({ url: 'https://picsum.photos/200/300/?random' }))
+bot.on('text', ({ reply }) => reply('Hello'))
+
+// Set telegram webhook
+// npm install -g localtunnel && lt --port 3000
+bot.telegram.setWebhook('https://intramirror.azurewebsites.net/telegram')
+
+app.use(koaBody())
+app.use((ctx, next) => ctx.method === 'POST' || ctx.url === '/telegram'
+  ? bot.handleUpdate(ctx.request.body, ctx.response)
+  : next()
+)
 
 ///////////////////////////////////////////////////////////
 // Catch unhandled exceptions
