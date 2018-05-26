@@ -12,8 +12,8 @@ const logger = require('./logger').logger('server');
 
 ///////////////////////////////////////////////////////////
 const isProduction = process.env.NODE_ENV === 'production';
-const port = process.env.PORT || 8080;
-const host = process.env.PORT || '127.0.0.1';
+const port = isProduction ? 80 : 8080;
+const host = isProduction ? '0.0.0.0' : '127.0.0.1';
 
 ///////////////////////////////////////////////////////////
 const app = new Koa();
@@ -46,15 +46,10 @@ app.use(templating('views', {
 app.use(controller());
 
 const bot = new Telegraf('576795663:AAEVjDl7tOaoJWYCysgND-9bwNSc6jjEKm4')
-// First reply will be served via webhook response,
-// but messages order not guaranteed due to `koa` pipeline design.
-// Details: https://github.com/telegraf/telegraf/issues/294
 bot.command('image', (ctx) => ctx.replyWithPhoto({ url: 'https://picsum.photos/200/300/?random' }))
 bot.on('text', ({ reply }) => reply('Hello'))
 
-// Set telegram webhook
-// npm install -g localtunnel && lt --port 3000
-bot.telegram.setWebhook('https://intramirror.azurewebsites.net/telegram')
+bot.telegram.setWebhook('https://xiaoda.japaneast.cloudapp.azure.com/telegram')
 
 app.use(koaBody())
 app.use((ctx, next) => ctx.method === 'POST' || ctx.url === '/telegram'
