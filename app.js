@@ -146,7 +146,7 @@ bot.hears('hi', ctx => ctx.reply('what?',
 
 bot.hears('switch', ctx => ctx.reply('switch',     
         Markup.inlineKeyboard([
-            Markup.switchToChatButton('reply', 'OK!'),
+            Markup.switchToChatButton('other', 'OK!'),
             Markup.switchToCurrentChatButton('reply', 'OK2: ')]).extra()
         )
     );
