@@ -191,7 +191,8 @@ return ctx.answerCbQuery(`Oh, ${ctx.match[0]}! Great choice`)
 })  
 
 ////////////////////////////////////////////////////////
-bot.telegram.setWebhook(`${config.rootUrl}/telebot`)
+bot.telegram.deleteWebhook();
+// bot.telegram.setWebhook(`${config.rootUrl}/telebot`);
 
 const app = new Koa()
 
