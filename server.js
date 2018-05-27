@@ -31,19 +31,19 @@ app.use(async (ctx, next) => {
 });
 
 ///////////////////////////////////////////////////////////
-// deal static files:
-app.use(staticFiles('/static/', __dirname + '/static'));
+// // deal static files:
+// app.use(staticFiles('/static/', __dirname + '/static'));
 
-// parse request body:
-app.use(bodyParser());
+// // parse request body:
+// app.use(bodyParser());
 
-// add nunjucks as view:
-app.use(templating('views', {
-    noCache: !isProduction,
-    watch: !isProduction
-}));
-// add controllers:
-app.use(controller());
+// // add nunjucks as view:
+// app.use(templating('views', {
+//     noCache: !isProduction,
+//     watch: !isProduction
+// }));
+// // add controllers:
+// app.use(controller());
 
 /////////////////////////////////////////////////////////
 const config = require('./config.json');
