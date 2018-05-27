@@ -135,7 +135,7 @@ bot.command('image', (ctx) => {
 
 bot.command('face', (ctx) => {
     onMsg('face');
-    return ctx.replyWithPhoto({ url: 'https://www.magicbowen.top:443/small.png' });
+    return ctx.replyWithPhoto({ url: 'https://www.magicbowen.top/small-extra.png' });
 })  
 
 bot.action('next', (ctx) => {
