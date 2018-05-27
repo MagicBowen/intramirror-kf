@@ -129,7 +129,7 @@ bot.command('image', (ctx) => {
   })
 
 bot.command('face', (ctx) => {
-    return ctx.replyWithPhoto({ url: 'https://www.magicbowen.top:443/intramirror/static/image/small.png' });
+    return ctx.replyWithPhoto({ url: 'https://www.magicbowen.top:443/small.png' });
 })  
 
 bot.action('next', (ctx) => {
