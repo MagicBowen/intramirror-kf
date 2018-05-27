@@ -49,7 +49,7 @@ const bot = new Telegraf('576795663:AAEVjDl7tOaoJWYCysgND-9bwNSc6jjEKm4')
 bot.command('image', (ctx) => ctx.replyWithPhoto({ url: 'https://picsum.photos/200/300/?random' }))
 bot.on('text', ({ reply }) => reply('Hello'))
 
-bot.telegram.setWebhook('http://xiaoda.japaneast.cloudapp.azure.com/telegram')
+bot.telegram.setWebhook('https://xiaoda.japaneast.cloudapp.azure.com/intramirror/telegram')
 
 app.use(koaBody())
 app.use((ctx, next) => ctx.method === 'POST' || ctx.url === '/telegram'
