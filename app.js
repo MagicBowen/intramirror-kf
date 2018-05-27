@@ -133,7 +133,7 @@ bot.action('next', (ctx) => {
       Extra.markdown()
         .markup(Markup.inlineKeyboard([
       Markup.callbackButton('next', 'next'),
-      Markup.button('reply', 'reply').forceReply()
+      Markup.button('reply', 'reply')
     ])))
   })
 
