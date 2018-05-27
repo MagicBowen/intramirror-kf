@@ -46,13 +46,6 @@ app.use(templating('views', {
 app.use(controller());
 
 /////////////////////////////////////////////////////////
-// Catch unhandled exceptions
-process.on('uncaughtException',function(err){
-    logger.error('uncaughtException-->'+err.stack+'--'+new Date().toLocaleDateString()+'-'+new Date().toLocaleTimeString());
-    process.exit();
-});
-
-/////////////////////////////////////////////////////////
 const config = require('./config.json');
 const Telegraf = require('telegraf');
 
@@ -64,11 +57,11 @@ bot.telegram.setWebhook(config.rootUrl + '/' + 'telebot');
 
 app.use(koaBody());
 app.use((ctx, next) => {
-    if (ctx.url === '/telebot') {
+    // if (ctx.url === '/telebot') {
         logger.error(`received from telegram for ${ctx.method}`);
         bot.handleUpdate(ctx.request.body, ctx.response);
-        return;
-    } 
+        // return;
+    // } 
     next();
 });
 
@@ -76,6 +69,13 @@ app.use((ctx, next) => {
 //   ? bot.handleUpdate(ctx.request.body, ctx.response)
 //   : next()
 // )
+
+/////////////////////////////////////////////////////////
+// Catch unhandled exceptions
+process.on('uncaughtException',function(err){
+    logger.error('uncaughtException-->'+err.stack+'--'+new Date().toLocaleDateString()+'-'+new Date().toLocaleTimeString());
+    process.exit();
+});
 
 /////////////////////////////////////////////////////////
 app.listen(port, host);
