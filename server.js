@@ -45,24 +45,24 @@ app.use(templating('views', {
 // add controllers:
 app.use(controller());
 
-const bot = new Telegraf('576795663:AAEVjDl7tOaoJWYCysgND-9bwNSc6jjEKm4')
-bot.command('image', (ctx) => ctx.replyWithPhoto({ url: 'https://picsum.photos/200/300/?random' }))
-bot.on('text', ({ reply }) => reply('Hello'))
+// const bot = new Telegraf('576795663:AAEVjDl7tOaoJWYCysgND-9bwNSc6jjEKm4')
+// bot.command('image', (ctx) => ctx.replyWithPhoto({ url: 'https://picsum.photos/200/300/?random' }))
+// bot.on('text', ({ reply }) => reply('Hello'))
 
-bot.telegram.setWebhook('https://xiaoda.japaneast.cloudapp.azure.com/intramirror/telegram')
+// bot.telegram.setWebhook('https://xiaoda.japaneast.cloudapp.azure.com/intramirror/telegram')
 
-app.use(koaBody())
-app.use((ctx, next) => ctx.method === 'POST' || ctx.url === '/telegram'
-  ? bot.handleUpdate(ctx.request.body, ctx.response)
-  : next()
-)
+// app.use(koaBody())
+// app.use((ctx, next) => ctx.method === 'POST' || ctx.url === '/telegram'
+//   ? bot.handleUpdate(ctx.request.body, ctx.response)
+//   : next()
+// )
 
 ///////////////////////////////////////////////////////////
 // Catch unhandled exceptions
-process.on('uncaughtException',function(err){
-    logger.error('uncaughtException-->'+err.stack+'--'+new Date().toLocaleDateString()+'-'+new Date().toLocaleTimeString());
-    process.exit();
-});
+// process.on('uncaughtException',function(err){
+//     logger.error('uncaughtException-->'+err.stack+'--'+new Date().toLocaleDateString()+'-'+new Date().toLocaleTimeString());
+//     process.exit();
+// });
 
 ///////////////////////////////////////////////////////////
 // app.listen(port, host);
