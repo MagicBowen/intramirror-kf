@@ -74,8 +74,8 @@ const http = require('http');
 const fs = require('fs');
 
 const options = {
-    key: fs.readFileSync('/etc/letsencrypt/live/xiaoda.japaneast.cloudapp.azure.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/xiaoda.japaneast.cloudapp.azure.com/fullchain.pem')
+    key: fs.readFileSync('./keys/1527996030113.key'),
+    cert: fs.readFileSync('./keys/1527996030113.pem')
 };
 
 http.createServer(app.callback()).listen(8080, '0.0.0.0');
