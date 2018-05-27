@@ -209,6 +209,7 @@ app.use(koaBody());
 app.use(async (ctx, next) => {
     if (ctx.url === '/telebot' && ctx.method === 'POST') {
         logger.debug('receive msg from telegram...');
+        logger.debug(`${JSON.stringify(ctx.request.body)}`);
         await bot.handleUpdate(ctx.request.body, ctx.response);
         logger.debug('... handle msg of telegram over!');
     }
