@@ -57,11 +57,11 @@ bot.telegram.setWebhook(config.rootUrl + '/' + 'telebot');
 
 app.use(koaBody());
 app.use((ctx, next) => {
-    // if (ctx.url === '/telebot') {
+    if (ctx.url === '/telebot') {
         logger.error(`received from telegram for ${ctx.method}`);
         bot.handleUpdate(ctx.request.body, ctx.response);
-        // return;
-    // } 
+        return;
+    } 
     next();
 });
 
