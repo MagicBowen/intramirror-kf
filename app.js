@@ -144,6 +144,13 @@ bot.hears('hi', ctx => ctx.reply('what?',
         )
     );
 
+bot.hears('switch', ctx => ctx.reply('switch',     
+        Markup.inlineKeyboard([
+            Markup.switchToChatButton('no1', 'OK1'),
+            Markup.switchToCurrentChatButton('no2', 'OK2')]).extra()
+        )
+    );
+
 bot.action('modify', (ctx) => {
     return ctx.editMessageText('how?',  Markup.inlineKeyboard([
         Markup.callbackButton('reply', 'reply')]).extra());
