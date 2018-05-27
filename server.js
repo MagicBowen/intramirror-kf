@@ -79,10 +79,8 @@ const options = {
   
 const httpsServer = https.createServer(options, app);
 
-httpsServer.listen(80, '0.0.0.0');
-
-// function(){
-//     var host = httpsServer.address().address;
-//     var port = httpsServer.address().port;
-//     console.log('server listening at https://%s:%s', host, port);
-//     }
+httpsServer.listen(80, '0.0.0.0', () => {
+    var host = httpsServer.address().address;
+    var port = httpsServer.address().port;
+    console.log('server listening at https://%s:%s', host, port);    
+});
