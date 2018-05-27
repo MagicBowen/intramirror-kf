@@ -11,7 +11,7 @@ const logger = require('./logger').logger('server');
 
 ///////////////////////////////////////////////////////////
 const isProduction = process.env.NODE_ENV === 'production';
-const port = isProduction ? 8080 : 8081;
+const port = isProduction ? 80 : 8080;
 const host = isProduction ? '0.0.0.0' : '127.0.0.1';
 
 ///////////////////////////////////////////////////////////
