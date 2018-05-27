@@ -150,11 +150,15 @@ bot.action('modify', (ctx) => {
 })
 
 bot.action('reply', (ctx) => {
-    return ctx.editMessageReplyMarkup(Markup.inlineKeyboard([
-        Markup.callbackButton('reply', 'reply')
-      ]).forceReply().extra()
-    );
+    return ctx.editMessageText('how?',  Markup.forceReply().extra());    
 })
+
+// bot.action('reply', (ctx) => {
+//     return ctx.editMessageReplyMarkup(Markup.inlineKeyboard([
+//         Markup.callbackButton('reply', 'reply')
+//       ]).forceReply().extra()
+//     );
+// })
 
 bot.action(/.+/, (ctx) => {
 return ctx.answerCbQuery(`Oh, ${ctx.match[0]}! Great choice`)
