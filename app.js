@@ -8,6 +8,10 @@ const logger = require('./logger').logger('app');
 
 const bot = new Telegraf(config.token)
 
+function onMsg(info) {
+    logger.debug(`on msg : ${info}`);
+}
+
 bot.command('onetime', ({ reply }) =>
   reply('One time keyboard', Markup
     .keyboard(['/simple', '/inline', '/pyramid'])
@@ -116,6 +120,7 @@ bot.action('italic', (ctx) => {
 
 ////////////////////////////////////////////////////////
 bot.command('image', (ctx) => {
+    onMsg('image');
     return ctx.replyWithPhoto({ url: 'https://picsum.photos/200/300/?random' },
       Extra.load({ caption: 'image' })
         .markdown()
@@ -129,10 +134,12 @@ bot.command('image', (ctx) => {
   })
 
 bot.command('face', (ctx) => {
+    onMsg('face');
     return ctx.replyWithPhoto({ url: 'https://www.magicbowen.top:443/small.png' });
 })  
 
 bot.action('next', (ctx) => {
+    onMsg('next');
     return ctx.editMessageCaption('new image', 
       Extra.markdown()
         .markup(Markup.inlineKeyboard([
@@ -141,26 +148,34 @@ bot.action('next', (ctx) => {
     ])))
   }) 
 
-bot.hears('hi', ctx => ctx.reply('what?',     
+bot.hears('hi', (ctx) => {
+    onMsg('hi');
+    return ctx.reply('what?',     
         Markup.inlineKeyboard([
             Markup.callbackButton('modify', 'modify'),
             Markup.callbackButton('reply', 'reply')]).extra()
-        )
+        );
+    }
     );
 
-bot.hears('switch', ctx => ctx.reply('switch',     
+bot.hears('switch', (ctx) => {
+    onMsg('switch');
+    return ctx.reply('switch',     
         Markup.inlineKeyboard([
             Markup.switchToChatButton('other', 'OK!'),
             Markup.switchToCurrentChatButton('reply', 'OK2: ')]).extra()
         )
+    }
     );
 
 bot.action('modify', (ctx) => {
+    onMsg('modify');
     return ctx.editMessageText('how?',  Markup.inlineKeyboard([
         Markup.callbackButton('reply', 'reply')]).extra());
 })
 
 bot.action('reply', (ctx) => {
+    onMsg('reply');
     return ctx.reply('reply?',  Markup.forceReply().extra());    
 })
 
