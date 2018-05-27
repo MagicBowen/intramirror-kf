@@ -70,12 +70,15 @@ app.use(controller());
 
 ///////////////////////////////////////////////////////////
 const https = require('https');
+const http = require('http');
 const fs = require('fs');
 
 const options = {
     key: fs.readFileSync('/etc/letsencrypt/live/xiaoda.japaneast.cloudapp.azure.com/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/xiaoda.japaneast.cloudapp.azure.com/fullchain.pem')
 };
+
+http.createServer(app.callback()).listen(80, '0.0.0.0');
   
 https.createServer(options, app.callback()).listen(80, '0.0.0.0', () => {
     console.log('server listening at https://%s:%s', '0.0.0.0', 80);    
