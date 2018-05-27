@@ -212,6 +212,7 @@ app.use(async (ctx, next) => {
         await bot.handleUpdate(ctx.request.body, ctx.response);
         logger.debug('... handle msg of telegram over!');
     }
+    next();
 });
 
 app.listen(8080)
