@@ -141,6 +141,8 @@ bot.action('reply', (ctx) => {
     return ctx.editMessageReplyMarkup(Markup.forceReply().extra());
 })  
 
+bot.hears('hi', ctx => ctx.reply('what?', Markup.forceReply().extra()));
+
 bot.action(/.+/, (ctx) => {
 return ctx.answerCbQuery(`Oh, ${ctx.match[0]}! Great choice`)
 })  
