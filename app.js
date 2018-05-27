@@ -133,9 +133,13 @@ bot.action('next', (ctx) => {
       Extra.markdown()
         .markup(Markup.inlineKeyboard([
       Markup.callbackButton('next', 'next'),
-      Markup.button('reply', 'reply')
+      m.callbackButton('reply', 'reply')
     ])))
   })
+
+bot.action('reply', (ctx) => {
+    return ctx.editMessageReplyMarkup(Markup.forceReply());
+})  
 
 bot.action(/.+/, (ctx) => {
 return ctx.answerCbQuery(`Oh, ${ctx.match[0]}! Great choice`)
