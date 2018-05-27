@@ -138,7 +138,7 @@ bot.action('next', (ctx) => {
   })
 
 bot.action('reply', (ctx) => {
-    return ctx.editMessageReplyMarkup(Markup.forceReply());
+    return ctx.editMessageReplyMarkup(Markup.forceReply().extra());
 })  
 
 bot.action(/.+/, (ctx) => {
