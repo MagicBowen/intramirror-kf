@@ -53,7 +53,7 @@ process.on('uncaughtException',function(err){
 });
 
 /////////////////////////////////////////////////////////
-const config = require('../config.json');
+const config = require('./config.json');
 
 const bot = new Telegraf(config.token)
 bot.command('image', (ctx) => ctx.replyWithPhoto({ url: 'https://picsum.photos/200/300/?random' }))
