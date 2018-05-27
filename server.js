@@ -62,11 +62,20 @@ bot.on('text', ({ reply }) => reply('Hello'));
 
 bot.telegram.setWebhook(config.rootUrl + '/' + 'telebot');
 
-app.use(koaBody())
-app.use((ctx, next) => ctx.method === 'POST' || ctx.url === '/telebot'
-  ? bot.handleUpdate(ctx.request.body, ctx.response)
-  : next()
-)
+app.use(koaBody());
+app.use((ctx, next) => {
+    if (ctx.url === '/telebot') {
+        logger.error(`received from telegram for ${ctx.method}`);
+        bot.handleUpdate(ctx.request.body, ctx.response);
+        return;
+    } 
+    next();
+});
+
+// app.use((ctx, next) => ctx.method === 'POST' || ctx.url === '/telebot'
+//   ? bot.handleUpdate(ctx.request.body, ctx.response)
+//   : next()
+// )
 
 /////////////////////////////////////////////////////////
 app.listen(port, host);
