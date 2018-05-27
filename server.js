@@ -31,44 +31,19 @@ app.use(async (ctx, next) => {
 });
 
 ///////////////////////////////////////////////////////////
-// // deal static files:
-// app.use(staticFiles('/static/', __dirname + '/static'));
+// deal static files:
+app.use(staticFiles('/static/', __dirname + '/static'));
 
-// // parse request body:
-// app.use(bodyParser());
+// parse request body:
+app.use(bodyParser());
 
-// // add nunjucks as view:
-// app.use(templating('views', {
-//     noCache: !isProduction,
-//     watch: !isProduction
-// }));
-// // add controllers:
-// app.use(controller());
-
-/////////////////////////////////////////////////////////
-const config = require('./config.json');
-const Telegraf = require('telegraf');
-
-const bot = new Telegraf(config.token);
-bot.command('image', (ctx) => ctx.replyWithPhoto({ url: 'https://picsum.photos/200/300/?random' }));
-bot.on('text', ({ reply }) => reply('Hello'));
-
-bot.telegram.setWebhook(config.rootUrl + '/' + 'telebot');
-
-app.use(koaBody());
-app.use((ctx, next) => {
-    if (ctx.url === '/telebot') {
-        logger.error(`received from telegram for ${ctx.method}`);
-        bot.handleUpdate(ctx.request.body, ctx.response);
-        return;
-    } 
-    next();
-});
-
-// app.use((ctx, next) => ctx.method === 'POST' || ctx.url === '/telebot'
-//   ? bot.handleUpdate(ctx.request.body, ctx.response)
-//   : next()
-// )
+// add nunjucks as view:
+app.use(templating('views', {
+    noCache: !isProduction,
+    watch: !isProduction
+}));
+// add controllers:
+app.use(controller());
 
 /////////////////////////////////////////////////////////
 // Catch unhandled exceptions
