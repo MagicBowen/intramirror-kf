@@ -157,7 +157,7 @@ bot.action('modify', (ctx) => {
 })
 
 bot.action('reply', (ctx) => {
-    return ctx.editMessageText('reply?',  Markup.forceReply().extra());    
+    return ctx.reply('reply?',  Markup.forceReply().extra());    
 })
 
 // bot.action('reply', (ctx) => {
