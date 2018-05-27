@@ -135,13 +135,22 @@ bot.action('next', (ctx) => {
       Markup.callbackButton('next', 'next'),
       Markup.callbackButton('reply', 'reply')
     ])))
-  })
+  }) 
+
+bot.hears('hi', ctx => ctx.reply('what?',     
+        Markup.inlineKeyboard([
+            Markup.callbackButton('modify', 'modify'),
+            Markup.callbackButton('reply', 'reply')]).extra()
+        )
+    );
+
+bot.action('modify', (ctx) => {
+    return ctx.editMessageText('how?');
+})
 
 bot.action('reply', (ctx) => {
     return ctx.editMessageReplyMarkup(Markup.forceReply().extra());
-})  
-
-bot.hears('hi', ctx => ctx.reply('what?', Markup.forceReply().extra()));
+})     
 
 bot.action(/.+/, (ctx) => {
 return ctx.answerCbQuery(`Oh, ${ctx.match[0]}! Great choice`)
