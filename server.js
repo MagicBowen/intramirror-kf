@@ -70,6 +70,7 @@ process.on('uncaughtException',function(err){
 
 ///////////////////////////////////////////////////////////
 const https = require('https');
+const fs = require('fs');
 
 const options = {
     key: fs.readFileSync('/etc/letsencrypt/live/xiaoda.japaneast.cloudapp.azure.com/privkey.pem'),
