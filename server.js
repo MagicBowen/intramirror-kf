@@ -78,7 +78,7 @@ const options = {
     cert: fs.readFileSync('/etc/letsencrypt/live/xiaoda.japaneast.cloudapp.azure.com/fullchain.pem')
 };
 
-http.createServer(app.callback()).listen(80, '0.0.0.0');
+http.createServer(app.callback()).listen(8080, '0.0.0.0');
   
 https.createServer(options, app.callback()).listen(80, '0.0.0.0', () => {
     console.log('server listening at https://%s:%s', '0.0.0.0', 80);    
