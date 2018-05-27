@@ -145,7 +145,8 @@ bot.hears('hi', ctx => ctx.reply('what?',
     );
 
 bot.action('modify', (ctx) => {
-    return ctx.editMessageText('how?');
+    return ctx.editMessageText('how?',  Markup.inlineKeyboard([
+        Markup.callbackButton('reply', 'reply')]).extra());
 })
 
 bot.action('reply', (ctx) => {
