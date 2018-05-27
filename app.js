@@ -1,4 +1,6 @@
 const Telegraf = require('telegraf')
+const Extra = require('telegraf/extra')
+const Markup = require('telegraf/markup')
 const Koa = require('koa')
 const koaBody = require('koa-body')
 const config = require('./config.json')
