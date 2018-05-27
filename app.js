@@ -118,6 +118,32 @@ bot.action(/.+/, (ctx) => {
   return ctx.answerCbQuery(`Oh, ${ctx.match[0]}! Great choice`)
 })
 
+////////////////////////////////////////////////////////
+bot.command('image', (ctx) => {
+    return ctx.replyWithPhoto({ url: 'https://picsum.photos/200/300/?random' },
+      Extra.load({ caption: 'image' })
+        .markdown()
+        .markup((m) =>
+          m.inlineKeyboard([
+            m.callbackButton('next', 'next'),
+            m.callbackButton('reply', 'reply')
+          ])
+        )
+    )
+  })
+
+
+bot.action('next', (ctx) => {
+    return ctx.editMessageCaption('new image', 
+      Extra.markdown()
+        .markup(Markup.inlineKeyboard([
+      Markup.callbackButton('next', 'next'),
+      Markup.button('reply', 'reply').forceReply()
+    ])))
+  })
+  
+
+////////////////////////////////////////////////////////
 bot.telegram.setWebhook(`${config.rootUrl}/telebot`)
 
 const app = new Koa()
@@ -138,7 +164,6 @@ app.use(async (ctx, next) => {
         logger.debug('receive msg from telegram...');
         await bot.handleUpdate(ctx.request.body, ctx.response);
         logger.debug('... handle msg of telegram over!');
-        return;
     }
 });
 
