@@ -128,6 +128,10 @@ bot.command('image', (ctx) => {
     )
   })
 
+bot.command('face', (ctx) => {
+    return ctx.replyWithPhoto({ url: 'https://www.magicbowen.top:443/intramirror/static/image/small.png' });
+})  
+
 bot.action('next', (ctx) => {
     return ctx.editMessageCaption('new image', 
       Extra.markdown()
