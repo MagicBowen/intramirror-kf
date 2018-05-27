@@ -7,12 +7,11 @@ const bodyParser = require('koa-bodyparser');
 const controller = require('./controller');
 const templating = require('./templating');
 const staticFiles = require('./static-files');
-const Telegraf = require('telegraf')
 const logger = require('./logger').logger('server');
 
 ///////////////////////////////////////////////////////////
 const isProduction = process.env.NODE_ENV === 'production';
-const port = isProduction ? 80 : 8080;
+const port = isProduction ? 8080 : 8081;
 const host = isProduction ? '0.0.0.0' : '127.0.0.1';
 
 ///////////////////////////////////////////////////////////
@@ -37,6 +36,7 @@ app.use(staticFiles('/static/', __dirname + '/static'));
 
 // parse request body:
 app.use(bodyParser());
+
 // add nunjucks as view:
 app.use(templating('views', {
     noCache: !isProduction,
@@ -45,41 +45,29 @@ app.use(templating('views', {
 // add controllers:
 app.use(controller());
 
-// const bot = new Telegraf('576795663:AAEVjDl7tOaoJWYCysgND-9bwNSc6jjEKm4')
-// bot.command('image', (ctx) => ctx.replyWithPhoto({ url: 'https://picsum.photos/200/300/?random' }))
-// bot.on('text', ({ reply }) => reply('Hello'))
-
-// bot.telegram.setWebhook('https://xiaoda.japaneast.cloudapp.azure.com/intramirror/telegram')
-
-// app.use(koaBody())
-// app.use((ctx, next) => ctx.method === 'POST' || ctx.url === '/telegram'
-//   ? bot.handleUpdate(ctx.request.body, ctx.response)
-//   : next()
-// )
-
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 // Catch unhandled exceptions
-// process.on('uncaughtException',function(err){
-//     logger.error('uncaughtException-->'+err.stack+'--'+new Date().toLocaleDateString()+'-'+new Date().toLocaleTimeString());
-//     process.exit();
-// });
-
-///////////////////////////////////////////////////////////
-// app.listen(port, host);
-// logger.info(`Server is running on ${host}:${port}...`);
-
-///////////////////////////////////////////////////////////
-const https = require('https');
-const http = require('http');
-const fs = require('fs');
-
-const options = {
-    key: fs.readFileSync('./keys/1527996030113.key'),
-    cert: fs.readFileSync('./keys/1527996030113.pem')
-};
-
-http.createServer(app.callback()).listen(8080, '0.0.0.0');
-  
-https.createServer(options, app.callback()).listen(80, '0.0.0.0', () => {
-    console.log('server listening at https://%s:%s', '0.0.0.0', 80);    
+process.on('uncaughtException',function(err){
+    logger.error('uncaughtException-->'+err.stack+'--'+new Date().toLocaleDateString()+'-'+new Date().toLocaleTimeString());
+    process.exit();
 });
+
+/////////////////////////////////////////////////////////
+const config = require('../config.json');
+
+const bot = new Telegraf(config.token)
+bot.command('image', (ctx) => ctx.replyWithPhoto({ url: 'https://picsum.photos/200/300/?random' }))
+bot.on('text', ({ reply }) => reply('Hello'))
+
+bot.telegram.setWebhook(config.rootUrl + '/' + 'telebot')
+
+app.use(koaBody())
+app.use((ctx, next) => ctx.method === 'POST' || ctx.url === '/telebot'
+  ? bot.handleUpdate(ctx.request.body, ctx.response)
+  : next()
+)
+
+
+/////////////////////////////////////////////////////////
+app.listen(port, host);
+logger.info(`Server is running on ${host}:${port}...`);
