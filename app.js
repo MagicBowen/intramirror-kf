@@ -133,10 +133,10 @@ bot.command('image', (ctx) => {
     )
   })
 
-bot.command('face', (ctx) => {
-    onMsg('face');
-    return ctx.replyWithPhoto({ url: 'https://www.magicbowen.top:443/small.png' });
-})  
+// bot.command('face', (ctx) => {
+//     onMsg('face');
+//     return ctx.replyWithPhoto({ url: 'https://www.magicbowen.top:443/small.png' });
+// })  
 
 bot.action('next', (ctx) => {
     onMsg('next');
