@@ -65,5 +65,21 @@ process.on('uncaughtException',function(err){
 });
 
 ///////////////////////////////////////////////////////////
-app.listen(port, host);
-logger.info(`Server is running on ${host}:${port}...`);
+// app.listen(port, host);
+// logger.info(`Server is running on ${host}:${port}...`);
+
+///////////////////////////////////////////////////////////
+const https = require('https');
+
+const options = {
+    key: fs.readFileSync('/etc/letsencrypt/live/xiaoda.japaneast.cloudapp.azure.com/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/xiaoda.japaneast.cloudapp.azure.com/fullchain.pem')
+};
+  
+const httpsServer = https.createServer(options, app);
+
+httpsServer.listen(80, '0.0.0.0', function(){
+var host = httpsServer.address().address;
+var port = httpsServer.address().port;
+console.log('server listening at https://%s:%s', host, port);
+});
