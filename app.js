@@ -114,10 +114,6 @@ bot.action('italic', (ctx) => {
   ])))
 })
 
-bot.action(/.+/, (ctx) => {
-  return ctx.answerCbQuery(`Oh, ${ctx.match[0]}! Great choice`)
-})
-
 ////////////////////////////////////////////////////////
 bot.command('image', (ctx) => {
     return ctx.replyWithPhoto({ url: 'https://picsum.photos/200/300/?random' },
@@ -132,7 +128,6 @@ bot.command('image', (ctx) => {
     )
   })
 
-
 bot.action('next', (ctx) => {
     return ctx.editMessageCaption('new image', 
       Extra.markdown()
@@ -141,7 +136,10 @@ bot.action('next', (ctx) => {
       Markup.button('reply', 'reply').forceReply()
     ])))
   })
-  
+
+bot.action(/.+/, (ctx) => {
+return ctx.answerCbQuery(`Oh, ${ctx.match[0]}! Great choice`)
+})  
 
 ////////////////////////////////////////////////////////
 bot.telegram.setWebhook(`${config.rootUrl}/telebot`)
