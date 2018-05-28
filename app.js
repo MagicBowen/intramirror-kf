@@ -192,7 +192,12 @@ return ctx.answerCbQuery(`Oh, ${ctx.match[0]}! Great choice`)
 var users = {};
 
 function findUserNameBy(id) {
-    return users.find(user => user == id);
+    for (let user in users) {
+        if (users[user] === id) {
+            return user;
+        }
+    }
+    return null;
 }
 
 ////////////////////////////////////////////////////////
