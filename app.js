@@ -239,6 +239,7 @@ bot.hears(/.+/, (ctx) => {
     }
 
     logger.debug(`${fromName} send msg [${text}] to ${toName}!`);
+    return ctx.reply(`send msg to ${toName} successful!`);
 })
 
 ////////////////////////////////////////////////////////
@@ -247,6 +248,7 @@ function handleMsg(msg) {
     let userId = users[toUser];
     if (!userId) {
         logger.error(`Send msg to unregistered user [${toUser}] failed!`);
+        return;
     }
     bot.telegram.sendMessage(userId, `*${msg.from}* : ${msg.text}`, Extra.markdown());
 }
