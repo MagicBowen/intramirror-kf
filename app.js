@@ -133,10 +133,20 @@ bot.command('image', (ctx) => {
     )
   })
 
-bot.command('face', (ctx) => {
-    onMsg('face');
-    return ctx.replyWithPhoto({ url: 'https://www.magicbowen.top/small-extra.png' });
+bot.command('small', (ctx) => {
+    onMsg('small face');
+    return ctx.replyWithPhoto({ source: './static/image/small.png' });
 })  
+
+bot.command('big', (ctx) => {
+    onMsg('big face');
+    return ctx.replyWithPhoto({ source: './static/image/big.png' });
+})  
+
+bot.command('chatphoto', (ctx) => {
+    onMsg('chat photo');
+    return ctx.setChatPhone({ source: './static/image/small.png' });
+})
 
 bot.action('next', (ctx) => {
     onMsg('next');
