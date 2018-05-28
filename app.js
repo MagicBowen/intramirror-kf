@@ -204,7 +204,7 @@ function findUserNameBy(id) {
 bot.command('register', (ctx) => {
     onMsg('register');
 
-    let username = ctx.message.text.substring(ctx.message.text.split(' ')[0].length).strip();
+    let username = ctx.message.text.substring(ctx.message.text.split(' ')[0].length).trim();
     if (!username) username = ctx.from.first_name + ' ' + ctx.from.last_name;
 
     users[username] = ctx.from.id;
@@ -214,7 +214,7 @@ bot.command('register', (ctx) => {
 bot.command('unregister', (ctx) => {
     onMsg('unregister');
 
-    let username = ctx.message.text.substring(ctx.message.text.split(' ')[0].length).strip();
+    let username = ctx.message.text.substring(ctx.message.text.split(' ')[0].length).trim();
     if (!username) username = ctx.from.first_name + ' ' + ctx.from.last_name;
     
     users[username] = null;
