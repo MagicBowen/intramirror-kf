@@ -248,7 +248,7 @@ function handleMsg(msg) {
     if (!userId) {
         logger.error(`Send msg to unregistered user [${toUser}] failed!`);
     }
-    bot.telegram.sendMessage(userId, `*${userId}* : ${text}`, Extra.markdown());
+    bot.telegram.sendMessage(userId, `*${msg.from}* : ${msg.text}`, Extra.markdown());
 }
 
 ////////////////////////////////////////////////////////
