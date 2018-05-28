@@ -228,11 +228,11 @@ bot.hears(/.+/, (ctx) => {
         return ctx.reply('You have not registered, please register first!');    
     }
     if (!ctx.message.reply_to_message) {
-        return ctx.reply('You send a message with no receiver☹️, [help](https://fanyi.baidu.com)!', Extra.markdown().webPreview());
+        return ctx.reply('You send a message with no receiver☹️, [help](https://www.magicbowen.top)!', Extra.markdown().webPreview());
     }
     let message = ctx.message.reply_to_message.text || ctx.message.reply_to_message.caption
     if (message.split(':').length < 2) {
-        return ctx.reply('Do not reply my message [face](https://www.magicbowen.top/small.png)', Extra.markdown().webPreview());
+        return ctx.reply('Do not reply my message [face](https://www.magicbowen.top/small-extra.png)', Extra.markdown().webPreview());
     }
 
     let toName = ctx.message.reply_to_message.text.split(':')[0];
