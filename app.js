@@ -141,11 +141,6 @@ bot.command('small', (ctx) => {
 bot.command('big', (ctx) => {
     onMsg('big face');
     return ctx.replyWithPhoto({ source: './static/image/big.png' });
-})  
-
-bot.command('chatphoto', (ctx) => {
-    onMsg('chat photo');
-    return ctx.setChatPhoto({ source: './static/image/small.png' });
 })
 
 bot.action('next', (ctx) => {
@@ -189,29 +184,67 @@ bot.action('reply', (ctx) => {
     return ctx.reply('reply?',  Markup.forceReply().extra());    
 })
 
-// bot.action('reply', (ctx) => {
-//     return ctx.editMessageReplyMarkup(Markup.inlineKeyboard([
-//         Markup.callbackButton('reply', 'reply')
-//       ]).forceReply().extra()
-//     );
-// })
-
 bot.action(/.+/, (ctx) => {
 return ctx.answerCbQuery(`Oh, ${ctx.match[0]}! Great choice`)
-})  
+})
+
+////////////////////////////////////////////////////////
+var users = {};
+
+function findUserNameBy(id) {
+    return users.find(user => user == id);
+}
+
+////////////////////////////////////////////////////////
+bot.command('register', (ctx) => {
+    onMsg('register');
+
+    let username = ctx.message.text.substring(ctx.message.text.split(' ')[0].length).strip();
+    if (!username) username = ctx.from.first_name + ' ' + ctx.from.last_name;
+
+    users[username] = ctx.from.id;
+    return ctx.reply(`register ${username} successful!`);
+})
+
+bot.command('unregister', (ctx) => {
+    onMsg('unregister');
+
+    let username = ctx.message.text.substring(ctx.message.text.split(' ')[0].length).strip();
+    if (!username) username = ctx.from.first_name + ' ' + ctx.from.last_name;
+    
+    users[username] = null;
+    return ctx.reply(`unregister ${username} successful!`);
+})
 
 bot.hears(/.+/, (ctx) => {
-    var msgPrefix = '';
-    if (ctx.message.from) {
-        logger.debug(`hear from ${JSON.stringify(ctx.message.from)}`);
-        msgPrefix = `from: ${ctx.message.from.first_name} ${ctx.message.from.last_name}`;
+    let fromName = findUserNameBy(ctx.from.id);
+    if (!fromName) {
+        logger.error(`Recieve msg from unregistered user ${ctx.from.id}`);
+        return ctx.reply('You have not registered, please register first!');    
     }
-    if (ctx.message.reply_to_message) {
-        logger.debug(`reply to msg: ${JSON.stringify(ctx.message.reply_to_message.text)}`);
-        msgPrefix += `, Reply: ${ctx.message.reply_to_message.text}`;
+    if (!ctx.message.reply_to_message) {
+        return ctx.reply('You send a message with no receiver!');        
     }
-    return ctx.reply(`content:${ctx.message.text}; ${msgPrefix}`);    
+    let toName = ctx.message.reply_to_message.text.split(':')[0];
+    let text = ctx.message.text;
+    let msg = {
+        from : fromName,
+        to   : toName,
+        text : text
+    }
+
+    logger.debug(`${fromName} send msg [${text}] to ${toName}!`);
 })
+
+////////////////////////////////////////////////////////
+function handleMsg(msg) {
+    let toUser = msg.to;
+    let userId = users[toUser];
+    if (!userId) {
+        logger.error(`Send msg to unregistered user [${toUser}] failed!`);
+    }
+    bot.telegram.sendMessage(userId, `*${userId}* : ${text}`, Extra.markdown());
+}
 
 ////////////////////////////////////////////////////////
 function init() {
@@ -243,6 +276,13 @@ app.use(async (ctx, next) => {
         logger.debug(`${JSON.stringify(ctx.request.body)}`);
         await bot.handleUpdate(ctx.request.body, ctx.response);
         logger.debug('... handle msg of telegram over!');
+        return;
+    }
+    if (ctx.url === '/msg' && ctx.method === 'POST') {
+        logger.debug('receive msg from server...');
+        await handleMsg(ctx.request.body);
+        logger.debug('... handle msg of server over!');
+        return;
     }
     next();
 });
