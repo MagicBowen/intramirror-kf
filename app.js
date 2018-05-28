@@ -230,7 +230,8 @@ bot.hears(/.+/, (ctx) => {
     if (!ctx.message.reply_to_message) {
         return ctx.reply('You send a message with no receiver☹️!');
     }
-    if (ctx.message.reply_to_message.text.split(':').length < 2) {
+    let message = ctx.message.reply_to_message.text || ctx.message.reply_to_message.caption
+    if (message.split(':').length < 2) {
         return ctx.reply('Do not reply my message😆');
     }
 
