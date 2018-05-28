@@ -211,7 +211,7 @@ bot.hears(/.+/, (ctx) => {
         msgPrefix += `, Reply: ${ctx.message.reply_to_message.text}`;
     }
     return ctx.reply(`content:${ctx.message.text}; ${msgPrefix}`);    
-}
+})
 
 ////////////////////////////////////////////////////////
 function init() {
