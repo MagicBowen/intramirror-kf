@@ -283,12 +283,14 @@ app.use(async (ctx, next) => {
         logger.debug(`${JSON.stringify(ctx.request.body)}`);
         await bot.handleUpdate(ctx.request.body, ctx.response);
         logger.debug('... handle msg of telegram over!');
+        ctx.response.status = 200;
         return;
     }
     if (ctx.url === '/msg' && ctx.method === 'POST') {
         logger.debug('receive msg from server...');
         await handleMsg(ctx.request.body);
         logger.debug('... handle msg of server over!');
+        ctx.response.status = 200;
         return;
     }
     next();
