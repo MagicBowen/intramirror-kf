@@ -228,8 +228,12 @@ bot.hears(/.+/, (ctx) => {
         return ctx.reply('You have not registered, please register first!');    
     }
     if (!ctx.message.reply_to_message) {
-        return ctx.reply('You send a message with no receiver!');        
+        return ctx.reply('You send a message with no receiver☹️!');
     }
+    if (ctx.message.reply_to_message.text.split(':').length < 2) {
+        return ctx.reply('Do not reply my message😆');
+    }
+
     let toName = ctx.message.reply_to_message.text.split(':')[0];
     let text = ctx.message.text;
     let msg = {
