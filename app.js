@@ -232,7 +232,7 @@ bot.hears(/.+/, (ctx) => {
     }
     let message = ctx.message.reply_to_message.text || ctx.message.reply_to_message.caption
     if (message.split(':').length < 2) {
-        return ctx.reply('Do not reply my message😆');
+        return ctx.reply('Do not reply my message [face](https://www.magicbowen.top/big.png)', Extra.markdown().webPreview());
     }
 
     let toName = ctx.message.reply_to_message.text.split(':')[0];
