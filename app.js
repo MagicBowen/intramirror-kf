@@ -200,9 +200,26 @@ bot.action(/.+/, (ctx) => {
 return ctx.answerCbQuery(`Oh, ${ctx.match[0]}! Great choice`)
 })  
 
+bot.hears(/.+/, (ctx) => {
+    var msgPrefix = '';
+    if (ctx.message.from) {
+        logger.debug(`hear from ${JSON.stringify(ctx.message.from)}`);
+        msgPrefix = `from: ${ctx.message.from.username}`;
+    }
+    if (ctx.message.reply_to_message) {
+        logger.debug(`reply to msg: ${JSON.stringify(ctx.message.reply_to_message.text)}`);
+        msgPrefix += `, Reply: ${ctx.message.reply_to_message.text}`;
+    }
+    return ctx.reply(`content:${ctx.message.text}; ${msgPrefix}`);    
+}
+
 ////////////////////////////////////////////////////////
 function init() {
-    (process.env.ROBOT === 'DOWN') ? bot.telegram.deleteWebhook() : bot.telegram.setWebhook(`${config.rootUrl}/telebot`);
+    if (process.env.ROBOT === 'DOWN') {
+        bot.telegram.deleteWebhook();
+    } else {
+        bot.telegram.setWebhook(`${config.rootUrl}/telebot`);
+    }
 }
 
 init();
