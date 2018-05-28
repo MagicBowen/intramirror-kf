@@ -204,7 +204,7 @@ bot.hears(/.+/, (ctx) => {
     var msgPrefix = '';
     if (ctx.message.from) {
         logger.debug(`hear from ${JSON.stringify(ctx.message.from)}`);
-        msgPrefix = `from: ${ctx.message.from.username}`;
+        msgPrefix = `from: ${ctx.message.from.first_name} ${ctx.message.from.last_name}`;
     }
     if (ctx.message.reply_to_message) {
         logger.debug(`reply to msg: ${JSON.stringify(ctx.message.reply_to_message.text)}`);
