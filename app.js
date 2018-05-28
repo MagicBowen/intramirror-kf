@@ -145,7 +145,7 @@ bot.command('big', (ctx) => {
 
 bot.command('chatphoto', (ctx) => {
     onMsg('chat photo');
-    return ctx.setChatPhone({ source: './static/image/small.png' });
+    return ctx.setChatPhoto({ source: './static/image/small.png' });
 })
 
 bot.action('next', (ctx) => {
