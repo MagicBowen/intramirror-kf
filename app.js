@@ -135,7 +135,7 @@ bot.command('image', (ctx) => {
 
 bot.command('small', (ctx) => {
     onMsg('small face');
-    return ctx.replyWithPhoto({ source: './static/image/small.png' });
+    return ctx.replyWithPhoto({ source: './static/image/small.png' }, Extra.load({ caption: 'this is my face, haha' }).markdown());
 })  
 
 bot.command('big', (ctx) => {
