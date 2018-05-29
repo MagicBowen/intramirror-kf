@@ -263,10 +263,11 @@ function handleMsg(msg) {
         logger.error(`Send msg to unregistered user [${toUser}] failed!`);
         return;
     }
-    // bot.telegram.sendMessage(userId, `*${msg.from.username}* : ${msg.text}`, Extra.markdown());
-    bot.telegram.sendPhoto(userId, { url: msg.from.profile },
-    Extra.load({ caption: `*${msg.from.username}* : ${msg.text}` })
-      .markdown());
+    logger.debug(`user profile url = ${msg.from.profile}`);
+    bot.telegram.sendMessage(userId, `*${msg.from.username}* : ${msg.text}`, Extra.markdown());
+    // bot.telegram.sendPhoto(userId, { url: msg.from.profile },
+    // Extra.load({ caption: `*${msg.from.username}* : ${msg.text}` })
+    //   .markdown());
 }
 
 ////////////////////////////////////////////////////////
