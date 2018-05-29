@@ -236,7 +236,7 @@ bot.hears(/.+/, async (ctx) => {
         return ctx.reply('Do not reply my message☹️!');
     }
 
-    let toName = message.split(':')[0];
+    let toName = message.split(':')[0].trim();
     let text = ctx.message.text;
     let msg = { from : { username : fromName }, to : { userId: toName }, text : text};
 
