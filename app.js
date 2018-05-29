@@ -262,10 +262,11 @@ function handleMsg(msg) {
         return;
     }
     logger.debug(`user profile url = ${msg.from.profile}`);
-    bot.telegram.sendMessage(userId, `*${msg.from.username}* : ${msg.text}`, Extra.markdown());
-    // bot.telegram.sendPhoto(userId, { url: msg.from.profile },
-    // Extra.load({ caption: `*${msg.from.username}* : ${msg.text}` })
-    //   .markdown());
+    // bot.telegram.sendMessage(userId, `*${msg.from.username}* : ${msg.text}`, Extra.markdown());
+
+    bot.telegram.sendPhoto(userId, { url: msg.from.profile },
+    Extra.load({ caption: `*${msg.from.username}* : ${msg.text}` })
+      .markdown());
 }
 
 ////////////////////////////////////////////////////////
