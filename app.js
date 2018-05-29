@@ -5,6 +5,7 @@ const Koa = require('koa')
 const koaBody = require('koa-body')
 const config = require('./config.json')
 const logger = require('./logger').logger('app');
+const request = require('./utils/syncpost');
 
 const bot = new Telegraf(config.token)
 
@@ -244,7 +245,14 @@ bot.hears(/.+/, (ctx) => {
     }
 
     logger.debug(`${fromName} send msg [${text}] to ${toName}!`);
-    return ctx.reply(`send msg to ${toName} successful!`);
+
+    const WECHAT_URL = 'https://www.magicbowen.top:443/wechat/msg';
+    try {
+      let result = await request.jsonPost(WECHAT_URL, msg);
+      return ctx.reply(`send msg to ${toName} successful!`);
+    } catch(err) {
+      return ctx.reply(`send msg to ${toName} failed!`);
+    }
 })
 
 ////////////////////////////////////////////////////////
