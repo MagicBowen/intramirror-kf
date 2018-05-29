@@ -251,6 +251,7 @@ bot.hears(/.+/, async (ctx) => {
       let result = await request.jsonPost(WECHAT_URL, msg);
       return ctx.reply(`send msg to ${toName} successful!`);
     } catch(err) {
+      logger.error(`send msg to ${toName} failed, because of ${err}`)
       return ctx.reply(`send msg to ${toName} failed!`);
     }
 })
