@@ -238,17 +238,12 @@ bot.hears(/.+/, async (ctx) => {
 
     let toName = message.split(':')[0];
     let text = ctx.message.text;
-    let msg = {
-        from : { username : fromName },
-        to   : { userId: toName },
-        text : text
-    }
+    let msg = { from : { username : fromName }, to : { userId: toName }, text : text};
 
     logger.debug(`${fromName} send msg [${text}] to ${toName}!`);
 
-    const WECHAT_URL = 'https://www.magicbowen.top:443/wechat/msg';
     try {
-      let result = await request.jsonPost(WECHAT_URL, msg);
+      let result = await request.jsonPost('https://www.magicbowen.top:443/wechat/msg', msg);
       return ctx.reply(`send msg to ${toName} successful!`);
     } catch(err) {
       logger.error(`send msg to ${toName} failed, because of ${err}`)
