@@ -222,7 +222,7 @@ bot.command('unregister', (ctx) => {
     return ctx.reply(`unregister ${username} successful!`);
 })
 
-bot.hears(/.+/, (ctx) => {
+bot.hears(/.+/, async (ctx) => {
     let fromName = findUserNameBy(ctx.from.id);
     if (!fromName) {
         logger.error(`Recieve msg from unregistered user ${ctx.from.id}`);
