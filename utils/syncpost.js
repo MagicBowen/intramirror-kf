@@ -40,5 +40,6 @@ function syncPost(uri, data) {
   });
 }
 
+module.exports.jsonPost = jsonPost;
 module.exports.syncPost = syncPost;
 module.exports.syncGet = syncGet;
