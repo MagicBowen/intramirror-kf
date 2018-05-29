@@ -5,7 +5,7 @@ const Koa = require('koa')
 const koaBody = require('koa-body')
 const config = require('./config.json')
 const logger = require('./logger').logger('app');
-const request = require('./utils/syncpost');
+const request = require('request');
 
 const bot = new Telegraf(config.token)
 
@@ -242,13 +242,15 @@ bot.hears(/.+/, async (ctx) => {
 
     logger.debug(`${fromName} send msg [${text}] to ${toName}!`);
 
-    try {
-      let result = await request.jsonPost('https://www.magicbowen.top:443/wechat/msg', msg);
-      return ctx.reply(`send msg to ${toName} successful!`);
-    } catch(err) {
-      logger.error(`send msg to ${toName} failed, because of ${err}`)
-      return ctx.reply(`send msg to ${toName} failed!`);
-    }
+    request({ url: "https://www.magicbowen.top:443/wechat/msg", method: "POST",  json: msg }, (err, response, body)=> {
+      if (!err && response.statusCode === 200) {
+          ctx.reply(`send msg to ${toName} successful!`);
+      }
+      else {
+          logger.error(`send msg to ${toName} failed, because of ${err}`)
+          ctx.reply(`send msg to ${toName} failed!`);
+      }
+    })
 })
 
 ////////////////////////////////////////////////////////
