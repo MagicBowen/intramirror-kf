@@ -230,16 +230,16 @@ bot.hears(/.+/, (ctx) => {
     if (!ctx.message.reply_to_message) {
         return ctx.reply('You send a message with no receiver☹️, [help](https://www.magicbowen.top)!', Extra.markdown().webPreview());
     }
-    let message = ctx.message.reply_to_message.text || ctx.message.reply_to_message.caption
+    let message = ctx.message.reply_to_message.text || ctx.message.reply_to_message.caption;
     if (message.split(':').length < 2) {
         return ctx.reply('Do not reply my message [face](https://www.magicbowen.top/small.png)', Extra.markdown().webPreview());
     }
 
-    let toName = ctx.message.reply_to_message.text.split(':')[0];
+    let toName = message.split(':')[0];
     let text = ctx.message.text;
     let msg = {
-        from : fromName,
-        to   : toName,
+        from : { username : fromName },
+        to   : { userId: toName },
         text : text
     }
 
