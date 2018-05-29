@@ -249,13 +249,16 @@ bot.hears(/.+/, (ctx) => {
 
 ////////////////////////////////////////////////////////
 function handleMsg(msg) {
-    let toUser = msg.to;
+    let toUser = msg.to.userId;
     let userId = users[toUser];
     if (!userId) {
         logger.error(`Send msg to unregistered user [${toUser}] failed!`);
         return;
     }
-    bot.telegram.sendMessage(userId, `*${msg.from}* : ${msg.text}`, Extra.markdown());
+    // bot.telegram.sendMessage(userId, `*${msg.from.username}* : ${msg.text}`, Extra.markdown());
+    bot.telegram.sendPhoto(userId, { url: msg.from.profile },
+    Extra.load({ caption: `*${msg.from.username}* : ${msg.text}` })
+      .markdown());
 }
 
 ////////////////////////////////////////////////////////
